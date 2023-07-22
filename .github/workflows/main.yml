@@ -17,10 +17,7 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
         script: |
-            $echo ${{ secrets.PASSWORD }} | sudo -S apt-get update
             cd ./hackathon-backend
             git pull origin master
             docker-compose down
             docker-compose up -d
-            systemctl daemon-reload
-            systemctl reload nginx
