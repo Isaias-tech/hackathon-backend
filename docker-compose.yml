@@ -7,7 +7,7 @@ services:
     env_file:
       - ./.env
     ports:
-      - "8000:8000"
+      - "8000:3000"
     volumes:
       - hackathon-api:/hackathon/dist
       - /hackathon/node_modules
