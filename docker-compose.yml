@@ -1,0 +1,64 @@
+version: '3.8'
+services:
+  hackathon-api:
+    container_name: hackathon-api
+    build: ./
+    command: bash -c "npm run build && npm run start:prod"
+    env_file:
+      - ./.env.local
+    ports:
+      - "8000:8000"
+    volumes:
+      - hackathon-api:/hackathon/dist
+      - /hackathon/node_modules
+    depends_on:
+      - hackathon-db
+    networks:
+      - hackathon-api
+    restart: unless-stopped
+
+  hackathon-pgadmin:
+    container_name: hackathon-pgadmin
+    image: dpage/pgadmin4:7.4
+    ports:
+      - "8080:80"
+    env_file:
+      - ./.env.local
+    networks:
+      - hackathon-api
+    depends_on:
+      - hackathon-db
+    restart: unless-stopped
+    
+  hackathon-db:
+    container_name: hackathon-db
+    image: postgres:15.3
+    ports:
+      - "9000:5432"
+    env_file:
+      - ./.env.local
+    volumes:
+      - hackathon-db:/var/lib/postgresql/data
+    networks:
+      - hackathon-api
+    restart: unless-stopped
+
+
+volumes:
+  hackathon-api:
+    driver: local
+    driver_opts:
+      device: /var/www/hackathonapi.isaias-tech.com
+      type: none
+      o: bind
+  hackathon-db:
+    driver: local
+    driver_opts:
+      device: ~/data/hackathon-db-volume
+      type: none
+      o: bind
+
+
+networks:
+  hackathon-api:
+    name: hackathon-api

@@ -1,0 +1,64 @@
+version: '3.8'
+services:
+  database-dev:
+    container_name: db-dev
+    image: postgres:15.3
+    restart: unless-stopped
+    ports:
+      - "9000:5432"
+    env_file:
+      - ./.env
+    volumes:
+      - db-dev-vol:/var/lib/postgresql/data
+    networks:
+      - hackathon-dev
+
+  api-dev:
+    container_name: api-dev
+    build: ./
+    command: bash -c "npm run start:dev"
+    env_file:
+      - ./.env
+    ports:
+      - "8000:3000"
+    volumes:
+      - api-dev-vol:/hackathon
+      - /hackathon/node_modules
+    depends_on:
+      - database-dev
+    networks:
+      - hackathon-dev
+    restart: unless-stopped
+
+  pgadmin-dev:
+    container_name: pgadmin-dev
+    image: dpage/pgadmin4:7.4
+    ports:
+      - "8080:80"
+    env_file:
+      - ./.env
+    networks:
+      - hackathon-dev
+    depends_on:
+      - database-dev
+    restart: unless-stopped
+
+
+volumes:
+  api-dev-vol:
+    driver: local
+    driver_opts:
+      device: ./
+      type: none
+      o: bind
+  db-dev-vol:
+    driver: local
+    driver_opts:
+      device: ./db
+      type: none
+      o: bind
+
+
+networks:
+  hackathon-dev:
+    name: hackathon-dev
