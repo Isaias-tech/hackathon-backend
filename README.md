@@ -21,6 +21,13 @@ After the requirements are met, follow these steps:
 
 For the app to be deployed the only thing that have to be done is to update the main branch.
 
+Sites:
+ - To access the api:
+   - API: https://hackathonapi.isaias-tech.com/api
+   - Documentation: https://hackathonapi.isaias-tech.com/docs
+ - To access database manager:
+   - https://hackathonpgadmin.isaias-tech.com/ 
+
 ## Enviroment variables
 
 ### Database
