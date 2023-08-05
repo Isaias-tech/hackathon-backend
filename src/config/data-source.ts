@@ -8,6 +8,7 @@ import { Menu } from "../entities/menu.entity";
 import { Order } from "../entities/order.entity";
 import { Restaurant } from "../entities/restaurant.entity";
 import { City } from "../entities/city.entity";
+import { Log } from "../entities/log.entity";
 
 
 export const AppDataSource = new DataSource({
@@ -19,7 +20,7 @@ export const AppDataSource = new DataSource({
 	database: POSTGRES_DB,
 	synchronize: true,
 	logging: true,
-	entities: [User, Site, Dish, DishCategory, Menu, Order, Restaurant, City],
+	entities: [User, Site, Dish, DishCategory, Menu, Order, Restaurant, City, Log],
 	subscribers: [],
 	migrations: [],
 })
