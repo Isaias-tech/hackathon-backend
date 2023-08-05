@@ -30,6 +30,7 @@ module.exports = {
     ],
     "rules": {
 		"@typescript-eslint/no-explicit-any": "warn",
-		"@typescript-eslint/array-type": "warn"
+		"@typescript-eslint/array-type": "warn",
+        "@typescript-eslint/no-unused-vars": "warn"
     }
 }

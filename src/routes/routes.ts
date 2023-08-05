@@ -1,9 +1,8 @@
-import { Request, Response, Router } from "express";
+import { Router } from "express";
+import userRoutes from "./user.routes"
 
 const router = Router();
 
-router.use("", (req: Request, res: Response) => {
-	res.json({message: "The app is running."})
-});
+router.use("/user", userRoutes);
 
 export default router;
