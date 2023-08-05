@@ -51,5 +51,17 @@ export const createRestaurant = async (req: Request, res:Response) => {
 }
 
 export const deleteRestaurant = async (req: Request, res:Response) => {
-	res.json({message: "This is /restaurant"})
+	const { id } = req.params;
+	const restaurantToUpdate = await AppDataSource.manager.findOneBy(Restaurant, {
+		id: parseInt(id),
+	});
+
+	if (!restaurantToUpdate)
+		return res
+			.sendStatus(404)
+			.json({ message: `No restaurant with the id: ${id} was found.` });
+
+	restaurantToUpdate.deleted = true;
+	await AppDataSource.manager.save(restaurantToUpdate);
+	res.json({ message: `The restaurant with the id: ${id} was deleted.` });
 }
